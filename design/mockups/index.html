@@ -1,46 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Reportive UI Kit</title>
-<link rel="icon" href="../../assets/favicon.png">
-<link rel="stylesheet" href="../../colors_and_type.css">
-<style>html,body{margin:0;padding:0;background:#f0eee9;height:100%}</style>
+<meta charset="UTF-8" />
+<title>Reportive · Avonetiq</title>
+<link rel="icon" href="assets/logo-mark.png" />
+<link rel="stylesheet" href="styles/colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0C182C; }
+  #root { height: 100vh; width: 100vw; }
+
+  /* Tweaks panel */
+  .tw-panel {
+    position: fixed; right: 20px; bottom: 20px; width: 260px;
+    background: rgba(12,24,44,.97); border: 1px solid var(--navy-edge); border-radius: 12px;
+    backdrop-filter: blur(20px); z-index: 9999; overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(0,194,184,.12);
+    font-family: var(--font-body); color: #FCFCFC;
+    display: flex; flex-direction: column;
+  }
+  .tw-head { padding: 12px 14px; border-bottom: 1px solid var(--navy-edge); display: flex; justify-content: space-between; align-items: center; }
+  .tw-head h3 { margin: 0; font-family: var(--font-display); font-size: 12.5px; font-weight: 700; }
+  .tw-body { padding: 10px 14px; overflow: auto; flex: 1; max-height: 340px; }
+  .tw-slot { display: flex; align-items: center; gap: 7px; margin-bottom: 7px; }
+  .tw-slot-key { font-family: var(--font-mono); font-size: 10px; color: var(--avo-teal); width: 42px; flex-shrink: 0; }
+  .tw-select { flex: 1; min-width: 0; background: var(--navy-surface); border: 1px solid var(--navy-edge); border-radius: 6px; color: #FCFCFC; padding: 5px 7px; font-family: var(--font-body); font-size: 11px; outline: none; appearance: none; }
+  .tw-icon-btn { padding: 4px 6px; background: var(--navy-elevated); border: 1px solid var(--navy-edge); border-radius: 5px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; flex-shrink: 0; }
+  .tw-icon-btn:hover { color: #FCFCFC; border-color: var(--avo-teal); }
+  .tw-btn { padding: 5px 10px; background: var(--navy-elevated); color: var(--text-secondary); border: 1px solid var(--navy-edge); border-radius: 6px; font-family: var(--font-display); font-size: 10.5px; font-weight: 600; cursor: pointer; }
+  .tw-btn:hover { color: #FCFCFC; }
+</style>
+
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script>
+  // Persisted slot config — rewritten by host on Tweaks change.
+  window.TWEAKS = /*EDITMODE-BEGIN*/{
+    "slotA": "narrative-hero",
+    "slotB": "kpi-strip",
+    "slotC": "chart-area",
+    "slotD": "chart-donut",
+    "slotE": "table-channels",
+    "slotF": "narrative-note"
+  }/*EDITMODE-END*/;
+</script>
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel" src="./design-canvas.jsx"></script>
-<script type="text/babel" src="./chrome.jsx"></script>
-<script type="text/babel" src="./screen-dashboard.jsx"></script>
-<script type="text/babel" src="./screen-campaigns.jsx"></script>
-<script type="text/babel" src="./screen-seo.jsx"></script>
-<script type="text/babel" src="./screen-login.jsx"></script>
+
+<script type="text/babel" src="components/design-canvas.jsx"></script>
+<script type="text/babel" src="components/chrome.jsx"></script>
+<script type="text/babel" src="components/charts.jsx"></script>
+<script type="text/babel" src="components/cards.jsx"></script>
+<script type="text/babel" src="components/library-sheets.jsx"></script>
+<script type="text/babel" src="components/screen-login.jsx"></script>
+<script type="text/babel" src="components/screen-dashboard.jsx"></script>
+<script type="text/babel" src="components/card-editor.jsx"></script>
+
 <script type="text/babel">
-const W = 1280, H = 820;
-const App = () => (
-  <DesignCanvas>
-    <DCSection id="auth" title="Auth & entry" subtitle="Login surface with full-bleed gradient flare">
-      <DCArtboard id="login" label="Login · Gradient flare" width={1100} height={740}>
-        <ScreenLogin/>
-      </DCArtboard>
-    </DCSection>
-    <DCSection id="reporting" title="Reporting app" subtitle="Three connected dashboard surfaces — sidebar, top bar, bilingual analyst copy">
-      <DCArtboard id="dashboard" label="01 · Dashboard overview" width={W} height={H}>
-        <ScreenDashboard/>
-      </DCArtboard>
-      <DCArtboard id="campaigns" label="02 · Campaigns (Google Ads)" width={W} height={H}>
-        <ScreenCampaigns/>
-      </DCArtboard>
-      <DCArtboard id="seo" label="03 · SEO &amp; Organic" width={W} height={H}>
-        <ScreenSEO/>
-      </DCArtboard>
-    </DCSection>
-  </DesignCanvas>
-);
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+  const { useState, useEffect } = React;
+
+  // ── Tweaks panel ────────────────────────────────────────────────
+  const TweaksPanel = ({ slots, setSlots, onOpenEditor }) => {
+    const byCat = window.CATS.map(c => ({ ...c, items: window.CARDS.filter(x => x.cat === c.id) }));
+    const set = (k, id) => {
+      const next = { ...slots, [k]: id };
+      setSlots(next);
+      window.parent?.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: id } }, '*');
+    };
+    const reset = () => {
+      const d = { ...window.DASHBOARD_SLOT_DEFAULTS };
+      setSlots(d);
+      window.parent?.postMessage({ type: '__edit_mode_set_keys', edits: d }, '*');
+    };
+    return (
+      <div className="tw-panel">
+        <div className="tw-head">
+          <div>
+            <h3>Tweaks · Slots</h3>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-muted)', marginTop: 2, letterSpacing: '0.07em' }}>26 variants · 6 slots</div>
+          </div>
+          <button className="tw-btn" onClick={reset}>Reset</button>
+        </div>
+        <div className="tw-body">
+          {['slotA','slotB','slotC','slotD','slotE','slotF'].map(k => (
+            <div key={k} className="tw-slot">
+              <span className="tw-slot-key">{k.replace('slot','Slot ')}</span>
+              <select className="tw-select" value={slots[k]} onChange={e => set(k, e.target.value)}>
+                {byCat.map(cat => (
+                  <optgroup key={cat.id} label={cat.title}>
+                    {cat.items.map(it => <option key={it.id} value={it.id}>{it.title}</option>)}
+                  </optgroup>
+                ))}
+              </select>
+              <button className="tw-icon-btn" title="Open editor" onClick={() => onOpenEditor(slots[k])}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+            </div>
+          ))}
+          <div style={{ paddingTop: 10, borderTop: '1px solid var(--navy-edge)', fontFamily: 'var(--font-body)', fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+            Click <span style={{ color: 'var(--avo-teal)' }}>✏</span> to open the Card Editor for any slot.
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // ── Editor overlay on main dashboard ───────────────────────────
+  const EditorOverlay = ({ cardId, onClose }) => {
+    if (!cardId) return null;
+    return ReactDOM.createPortal(
+      <div style={{
+        position: 'fixed', inset: 0, zIndex: 10000,
+        display: 'flex', alignItems: 'stretch', justifyContent: 'flex-end',
+        pointerEvents: 'none',
+      }}>
+        {/* dim backdrop — only behind the panel area, not full screen block */}
+        <div style={{ flex: 1, background: 'rgba(0,0,0,.3)', pointerEvents: 'auto', cursor: 'default' }} onClick={onClose}/>
+        <div style={{ width: 320, pointerEvents: 'auto', height: '100%' }}>
+          <CardEditorPanel cardId={cardId} onClose={onClose}/>
+        </div>
+      </div>,
+      document.body,
+    );
+  };
+
+  // ── Root App ────────────────────────────────────────────────────
+  const App = () => {
+    const [editMode, setEditMode] = useState(false);
+    const [slots, setSlots] = useState({ ...window.DASHBOARD_SLOT_DEFAULTS, ...(window.TWEAKS || {}) });
+    const [editorCardId, setEditorCardId] = useState(null);
+
+    useEffect(() => {
+      const handler = (e) => {
+        if (e.data?.type === '__activate_edit_mode') setEditMode(true);
+        if (e.data?.type === '__deactivate_edit_mode') { setEditMode(false); setEditorCardId(null); }
+      };
+      window.addEventListener('message', handler);
+      window.parent?.postMessage({ type: '__edit_mode_available' }, '*');
+      return () => window.removeEventListener('message', handler);
+    }, []);
+
+    return (
+      <>
+        <DesignCanvas>
+
+          {/* ── MAIN: Dashboard ─────────────────────────────── */}
+          <DCSection id="main" title="Main · Dashboard" subtitle="The only page users see — 6 swappable slots. Enable Tweaks to swap cards or open the editor.">
+            <DCArtboard id="dashboard" label="01 · Dashboard (live)" width={1360} height={1180}>
+              <ScreenDashboard slots={slots} editMode={editMode}/>
+            </DCArtboard>
+          </DCSection>
+
+          {/* ── CARD EDITOR: artboard presentations ─────────── */}
+          <DCSection id="editor" title="Card Editor · Properties Panel" subtitle="3-tab panel — context-aware per card category. Toggle Tweaks + click ✏ on a slot to open live.">
+
+            <DCArtboard id="editor-kpi-setup" label="KPI · Setup tab" width={1360} height={860}>
+              <DashboardWithEditor cardId="kpi-single" editorTab="setup"/>
+            </DCArtboard>
+
+            <DCArtboard id="editor-chart-setup" label="Chart · Setup tab" width={1360} height={860}>
+              <DashboardWithEditor cardId="chart-area" editorTab="setup"/>
+            </DCArtboard>
+
+            <DCArtboard id="editor-table-setup" label="Table · Setup tab" width={1360} height={860}>
+              <DashboardWithEditor cardId="table-channels" editorTab="setup"/>
+            </DCArtboard>
+
+            <DCArtboard id="editor-narrative-setup" label="Narrative · Setup tab" width={1360} height={860}>
+              <DashboardWithEditor cardId="narrative-hero" editorTab="setup"/>
+            </DCArtboard>
+
+            <DCArtboard id="editor-style" label="Style tab (any card)" width={1360} height={1100}>
+              <DashboardWithEditor cardId="chart-donut" editorTab="style"/>
+            </DCArtboard>
+
+            <DCArtboard id="editor-pages" label="Pages tab" width={1360} height={860}>
+              <DashboardWithEditor cardId="list-keywords" editorTab="pages"/>
+            </DCArtboard>
+
+          </DCSection>
+
+          {/* ── CARD LIBRARY ─────────────────────────────────── */}
+          <DCSection id="library" title="Card Library" subtitle="26 variants across 7 categories">
+            <DCArtboard id="sticker-sheet" label="Sticker sheet · All variants" width={1400} height={2800}>
+              <StickerSheet/>
+            </DCArtboard>
+          </DCSection>
+
+          <DCSection id="categories" title="Category deep-dives">
+            <DCArtboard id="cat-narrative" label="01 · Text & Narrative" width={1280} height={900}><CategorySheet catId="narrative"/></DCArtboard>
+            <DCArtboard id="cat-kpi" label="02 · Data & KPI" width={1280} height={900}><CategorySheet catId="kpi"/></DCArtboard>
+            <DCArtboard id="cat-charts" label="03 · Charts" width={1400} height={1400}><CategorySheet catId="charts"/></DCArtboard>
+            <DCArtboard id="cat-tables" label="04 · Tables" width={1400} height={1100}><CategorySheet catId="tables"/></DCArtboard>
+            <DCArtboard id="cat-progress" label="05 · Progress & Scores" width={1280} height={900}><CategorySheet catId="progress"/></DCArtboard>
+            <DCArtboard id="cat-lists" label="06 · Lists" width={1280} height={900}><CategorySheet catId="lists"/></DCArtboard>
+            <DCArtboard id="cat-carousel" label="07 · Highlights" width={1280} height={500}><CategorySheet catId="carousel"/></DCArtboard>
+          </DCSection>
+
+          {/* ── AUTH: reference ──────────────────────────────── */}
+          <DCSection id="auth" title="Reference · Authentication">
+            <DCArtboard id="login" label="Login · Welcome back" width={520} height={720}>
+              <ScreenLogin/>
+            </DCArtboard>
+          </DCSection>
+
+        </DesignCanvas>
+
+        {/* Live editor overlay (portal) */}
+        <EditorOverlay cardId={editorCardId} onClose={() => setEditorCardId(null)}/>
+
+        {/* Tweaks panel */}
+        {editMode && <TweaksPanel slots={slots} setSlots={setSlots} onOpenEditor={id => setEditorCardId(id)}/>}
+      </>
+    );
+  };
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
 </html>

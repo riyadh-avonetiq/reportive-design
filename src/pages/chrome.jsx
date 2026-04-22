@@ -14,7 +14,7 @@ const RSidebar = ({ active = 'dashboard' }) => {
   return (
     <aside style={{ width: 240, minWidth: 240, background: 'rgba(10,20,38,.93)', borderRight: '1px solid var(--navy-edge)', display: 'flex', flexDirection: 'column', height: '100%', backdropFilter: 'blur(24px)' }}>
       <div style={{ padding: '18px 20px 16px', borderBottom: '1px solid var(--navy-edge)', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <img src="../../assets/logo-mark.png" style={{ width: 28, height: 28 }} />
+        <img src="assets/logo-mark.png" style={{ width: 28, height: 28 }} />
         <div>
           <div style={{ fontFamily: 'var(--font-display)', fontSize: 15, fontWeight: 700, color: '#FCFCFC', letterSpacing: '-0.01em' }}>Reportive</div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>by Avonetiq</div>

@@ -5,7 +5,7 @@ const ScreenLogin = () => (
     <RFlare intensity={0.8}/>
     <div style={{ position: 'relative', zIndex: 1, width: 400, padding: 36, borderRadius: 20, background: 'linear-gradient(145deg,rgba(12,24,44,.85),rgba(28,42,63,.75))', border: '1px solid rgba(255,255,255,.08)', backdropFilter: 'blur(20px)', boxShadow: '0 40px 120px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.1)' }}>
       <div style={{ textAlign: 'center', marginBottom: 24 }}>
-        <img src="../../assets/logo-vertical-on-dark.png" style={{ height: 70, marginBottom: 14 }}/>
+        <img src="assets/logo-vertical-on-dark.png" style={{ height: 70, marginBottom: 14 }}/>
         <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 700, color: '#FCFCFC', letterSpacing: '-0.01em' }}>Welcome back</div>
         <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-secondary)', marginTop: 4 }}>Sign in to your Reportive workspace</div>
       </div>
